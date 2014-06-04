@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <title>hex2rgb, a hex to rgb converter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+</head>
+<body>
+<h1 class="text-center">Hex To RGB Converter</h1>
+<div class="panel panel-success" style="max-width: 440px; margin: 50px auto;">
+    <div class="panel-heading">
+        <h3 class="panel-title">Hex to RGB</h3>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="hex" class="col-sm-2 control-label">Hex:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="hex" placeholder="Insert hex value here..." onkeyup="keyup(event)" onclick="clearInput()">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="rgb" class="col-sm-2 control-label">RGB:</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" id="rgb">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="button" class="btn btn-default" onclick="convert()">convert</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function toRGB(n) {
+        return parseInt(n, 16);
+    }
+    function convert() {
+        var r, g, b, hexValue = document.getElementById('hex').value;
+        if (hexValue.charAt(0) === "#") {
+            hexValue = hexValue.substring(1, hexValue.length);
+        }
+        if (hexValue.length === 3) {
+            r = toRGB('' + hexValue.substring(0, 1) + hexValue.substring(0, 1))
+            g = toRGB('' + hexValue.substring(1, 2) + hexValue.substring(1, 2))
+            b = toRGB('' + hexValue.substring(2, 3) + hexValue.substring(2, 3))
+        } else if (hexValue.length === 6) {
+            r = toRGB(hexValue.substring(0, 2))
+            g = toRGB(hexValue.substring(2, 4))
+            b = toRGB(hexValue.substring(4, 6))
+        }
+        document.getElementById('rgb').value = 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+    function keyup (e) {
+        if (e.keyCode === 13) {
+            convert();
+        }
+    }
+    function clearInput() {
+        document.getElementById('hex').value = '';
+    }
+</script>
+
+</body>
+</html>
