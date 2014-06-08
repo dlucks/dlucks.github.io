@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index,follow" />
+    <title>Justify Items Pitfall</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    <style type="text/css">
+        .container {
+            max-width: 400px;
+            height: 70px;
+            padding: 10px;
+            border: 1px solid #000;
+            margin: 0 auto 40px auto;
+            box-sizing: content-box;
+        }
+        .box {
+            width: 70px;
+            height: 70px;
+            background: #990000;
+        }
+        .justify-wrapper {
+            text-align: justify;
+        }
+
+        .justify-wrapper:after {
+            visibility: hidden;
+            content: ".";
+            width: 100%;
+            display: inline-block;
+        }
+
+        .justify-item {
+            display: inline-block;
+        }
+
+        code.block {
+            margin: 0 auto 20px auto;
+            max-width: 422px;
+            padding: 10px;
+            display: block;
+            border: 1px solid #000;
+            overflow-x: scroll;
+        }
+        .red {
+            color: red;
+        }
+        .green {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <h1>Justify Items Pitfall</h1>
+
+    <p>Justifying items is a very nice approach especially in the context of responsive design. In the given
+        examples the classes <code>justify-wrapper</code> and <code>justify-item</code> are the
+        essentials. <code>container</code> and <code>box</code> are just a little layout. Just have a look
+        at the source code for details. But this approach has a big pitfall: All justified items
+        <strong>have to been separated by a line-break</strong>. If they were not, they will not be aligned
+        correctly.</p>
+
+    <h2>1.) Separate justified items with line-breaks: <span class="green">works!</span></h2>
+
+    <code class="block">
+<pre>
+&lt;div class="container justify-wrapper"&gt;
+    &lt;div class="box justify-item"&gt;&lt;/div&gt;
+    &lt;div class="box justify-item"&gt;&lt;/div&gt;
+    &lt;div class="box justify-item"&gt;&lt;/div&gt;
+    &lt;div class="box justify-item"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</pre>
+    </code>
+
+    <div class="container justify-wrapper">
+        <div class="box justify-item"></div>
+        <div class="box justify-item"></div>
+        <div class="box justify-item"></div>
+        <div class="box justify-item"></div>
+    </div>
+
+    <h2>2.) Do NOT separate justified items with line-breaks: <span class="red">doesn't work!</span></h2>
+
+    <code class="block">
+<pre>
+&lt;div class="container justify-wrapper"&gt;&lt;div class="box justify-item"&gt;&lt;/div&gt;&lt;div class="box justify-item"&gt;&lt;/div&gt;&lt;div class="box justify-item"&gt;&lt;/div&gt;&lt;div class="box justify-item"&gt;&lt;/div&gt;&lt;/div&gt;
+</pre>
+    </code>
+
+    <div class="container justify-wrapper">
+        <div class="box justify-item"></div><div class="box justify-item"></div><div class="box justify-item"></div><div class="box justify-item"></div>
+    </div>
+
+    <h2>3.) Separate justified items with html entity '&amp;#10;' (line feed): <span class="green">works!</span></h2>
+
+    <code class="block">
+<pre>
+&lt;div class="container justify-wrapper"&gt;&lt;div class="box justify-item"&gt;&lt;/div&gt;&amp;#10;&lt;div class="box justify-item"&gt;&lt;/div&gt;&amp;#10;&lt;div class="box justify-item"&gt;&lt;/div&gt;&amp;#10;&lt;div class="box justify-item"&gt;&lt;/div&gt;&lt;/div&gt;
+</pre>
+    </code>
+
+    <div class="container justify-wrapper"><div class="box justify-item"></div>&#10;<div class="box justify-item"></div>&#10;<div class="box justify-item"></div>&#10;<div class="box justify-item"></div></div>
+</body>
+</div>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-45190281-8', 'dlucks.github.io');
+    ga('send', 'pageview');
+</script>
+
+</html>
